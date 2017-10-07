@@ -53,8 +53,10 @@ def fetch_free_rooms(all_rooms, booked_rooms):
     q = []
     for k, v in all_rooms.items():
         if k not in booked_rooms:
-            q += [k, v["coordinates"]]
+            q += [(k, v["coordinates"])]
     return q
+
+
 
 
 #get my location
@@ -72,18 +74,26 @@ def get_distances(freerooms):
     # url = "https://uclapi.com/roombookings/rooms"
     # r = requests.get(url, params=params, verify=False)
     # rooms = r.json()
-    for room in freerooms:
-        latitud = room["location"]["coordinates"]["lat"]
-        longitud = room["location"]["coordinates"]["lng"]
+    #latitud = []
+    #longitud = []
+    distancearray = []
+    for i in range (0, len(freerooms)-1):
+    #for room in freerooms:
+        latitud = freerooms[i][1]["lat"]
+        longitud = freerooms[i][1]["lng"]
         roomloc = (float(latitud),float(longitud))
-        print(vincenty(myloc, roomloc).meters)
+        distancearray.append(vincenty(myloc, roomloc).meters)
+        #print(vincenty(myloc, roomloc).meters)
+    return distancearray
 
 if __name__ == "__main__":
     all_rooms = fetch_all_rooms()
     booked_rooms = fetch_booked_rooms()
     #print(len(booked_rooms))
     frees = fetch_free_rooms(all_rooms, booked_rooms)
-    #for f in frees:
-    #    pass
+    # frees = [(room1, {lat: 1, lon 2}), (room2, {lat: 3, lon 4}), ...]
+    #for item in frees:
+    #print(frees[0][1]["lat"])
+    distances = get_distances(frees)
+    frees = zip(frees,distances)
     print(frees)
-    get_distances(frees)
