@@ -38,5 +38,30 @@ def fetch_booked_rooms():
 
 	#print(booked_rooms)
 
+def fetch_free_rooms(all_rooms, booked_rooms):
+	# bookedrooms = 0
+	# for room in all_rooms["rooms"]:
+	# 	for bookedroom in booked_rooms["bookings"]:
+	# 		if (room["roomname"] == bookedroom["roomname"]):
+	# 			bookedrooms+=1
+	free_rooms = {}
+	for room1 in all_rooms["rooms"]:
+		for room2 in booked_rooms["bookings"]:
+			if room1["roomname"] == room2["roomname"]:
+				continue
+			else:
+				free_rooms['location'] = []
+				free_rooms['location'].append({
+					'lat': room1["location"]["coordinates"]["lat"],
+					'lng': room1["location"]["coordinates"]["lng"],
+					})
+
+	return free_rooms
+
 if __name__ == "__main__":
-	print(fetch_booked_rooms())
+	all_rooms = fetch_all_rooms()
+	booked_rooms = fetch_booked_rooms()
+	print(all_rooms)
+	print(booked_rooms.keys())
+	frees = fetch_free_rooms(all_rooms, booked_rooms)
+	print(frees)
