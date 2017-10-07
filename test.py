@@ -6,11 +6,18 @@ from geopy.distance import vincenty
 token = "uclapi-c326874173a184-6c5f661c3df9d2-8675b01a108065-1d7402a6109769"
 
 
-def get_rooms():
+#get my location
+send_url = 'http://freegeoip.net/json'
+m = requests.get(send_url)
+j = json.loads(m.text)
+mylat = j['latitude']
+mylon = j['longitude']
+myloc = (float(mylat), float(mylon))
+
+def get_distances():
     params = {
         "token": token
     }
-    myloc = (51.5249193, -0.1332382)
     url = "https://uclapi.com/roombookings/rooms"
     r = requests.get(url, params=params, verify=False)
     rooms = r.json()
@@ -18,7 +25,7 @@ def get_rooms():
         latitud = room["location"]["coordinates"]["lat"]
         longitud = room["location"]["coordinates"]["lng"]
         roomloc = (float(latitud),float(longitud))
-        print(vincenty(myloc, roomloc).miles)
+        print(vincenty(myloc, roomloc).meters)
 
 if __name__ == "__main__":
-    get_rooms()
+    get_distances()
