@@ -60,13 +60,13 @@ var map, infoWindow;
       }
     
     function showfreerooms(){
-        var info = document.getElementById("closestrooms");
-        info.innerHTML="HELLO";
+        //var info = document.getElementById("closestrooms");
+        //info.innerHTML="HELLO";
         
           var xhttp = new XMLHttpRequest();
           xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-              document.getElementById("demo").innerHTML =
+              document.getElementById("closestrooms").innerHTML =
               this.responseText;
             }
           };
