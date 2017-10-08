@@ -45,10 +45,7 @@ var map, infoWindow;
         
           var xhttp = new XMLHttpRequest();
           xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-              document.getElementById("closestrooms").innerHTML =
-              this.responseText;
-                
+            if (this.readyState == 4 && this.status == 200) {               
                 // Create a <script> tag and set the USGS URL as the source.
                 //var script = document.createElement('script');
                 //script.setAttribute("id", "script");
@@ -60,15 +57,19 @@ var map, infoWindow;
                 $.getJSON("result.json", function(a) {
 //                    console.log(a.rooms);
 //                    console.log(a.rooms[0][0][1].lat);
-                    for (var i = 0; i < 5; i++){
+                    var rooms = [];
+                    for (var i = 0; i < 5; i++){  
+                      rooms.push(a.rooms[i][0][0]);
                       var lat = a.rooms[i][0][1].lat;
                       var lng = a.rooms[i][0][1].lng; 
                       var latLng = new google.maps.LatLng(lat,lng);
                       var marker = new google.maps.Marker({
                           position: latLng,
                           map: map
-                  });
+                          });
+                      //document.getElementById("closestrooms").innerHTML = a.rooms.[i][0][0];
                     }
+                    shittylanguage(rooms);
                 }
                 
 
@@ -95,3 +96,12 @@ var map, infoWindow;
           xhttp.open("GET", "PHP_Python_Test.php", true);
           xhttp.send();
     }
+
+function shittylanguage(rooms){
+  for (var i = 0; i < 5; i++){ 
+    var line = document.createElement("p");
+    line.className = "line";
+    line.innerHTML = rooms[i];
+  document.getElementById("closestrooms").appendChild(line);
+  }
+}
