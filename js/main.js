@@ -56,7 +56,8 @@ var map, infoWindow;
                       var latLng = new google.maps.LatLng(lat,lng);
                       var marker = new google.maps.Marker({
                           position: latLng,
-                          map: map,
+                          animation: google.maps.Animation.DROP,
+                          map: map
                           label: letters[i]
                           });
                     var contentString = '<p> ' + a.rooms[i][0][0] + '<p>';
