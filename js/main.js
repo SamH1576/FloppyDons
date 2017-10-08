@@ -65,6 +65,7 @@ var map, infoWindow;
                       var latLng = new google.maps.LatLng(lat,lng);
                       var marker = new google.maps.Marker({
                           position: latLng,
+                          animation: google.maps.Animation.DROP,
                           map: map
                           });
                       //document.getElementById("closestrooms").innerHTML = a.rooms.[i][0][0];
