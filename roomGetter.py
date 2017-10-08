@@ -94,6 +94,6 @@ if __name__ == "__main__":
     distances = get_distances(frees)
     frees = zip(frees,distances)
     final_list = nearest_rooms(frees)
-    return(json.dumps(final_list))
+    print(json.dumps(final_list))
     # for item in final_list:
     #     print(item)
