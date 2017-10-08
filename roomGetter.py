@@ -4,6 +4,7 @@ import threading
 from datetime import datetime, timedelta
 from geopy.distance import vincenty
 from operator import itemgetter
+import io
 
 #methods for fetching all-rooms and booked-rooms using UCLAPI
 token = "uclapi-b122f02364cceb-6ec34be674c766-69f4d9c4c6e139-647b11df6fcef4"
@@ -98,6 +99,9 @@ if __name__ == "__main__":
                    "rooms": nearest_rooms(frees),
                 }
 
-    print(json.dumps(final_list))
+    with io.open('data.txt', 'w', encoding='utf-8') as f:
+        f.write(json.dumps(final_list, ensure_ascii=False))
+
+    #print(json.dumps(final_list))
     # for item in final_list:
     #     print(item)
