@@ -99,9 +99,15 @@ if __name__ == "__main__":
                    "rooms": nearest_rooms(frees),
                 }
 
+<<<<<<< HEAD
     with io.open('data.txt', 'w', encoding='utf-8') as f:
         f.write(json.dumps(final_list, ensure_ascii=False))
 
+=======
+    with open('result.json', 'w') as fp:
+        string = json.dumps(final_list)
+        fp.write("{}".format(string))
+>>>>>>> 4d1b9c9d33edab8a2a7b93e4c5310223942a0c6b
     #print(json.dumps(final_list))
     # for item in final_list:
     #     print(item)
