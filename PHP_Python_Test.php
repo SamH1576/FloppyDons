@@ -1,6 +1,6 @@
 <?php
 
-$command = escapeshellcmd('python API_TEST.py');
+$command = escapeshellcmd('python roomGetter.py');
 $output = shell_exec($command);
 echo $output;
 
