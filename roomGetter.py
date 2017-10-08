@@ -93,7 +93,11 @@ if __name__ == "__main__":
     # frees = [(room1, {lat: 1, lon 2}), (room2, {lat: 3, lon 4}), ...]
     distances = get_distances(frees)
     frees = zip(frees,distances)
-    final_list = nearest_rooms(frees)
+
+    final_list = {"status": "ok",
+                   "rooms": nearest_rooms(frees),
+                }
+
     print(json.dumps(final_list))
     # for item in final_list:
     #     print(item)
