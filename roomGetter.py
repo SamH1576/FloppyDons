@@ -98,6 +98,9 @@ if __name__ == "__main__":
                    "rooms": nearest_rooms(frees),
                 }
 
-    print(json.dumps(final_list))
+    with open('result.json', 'w') as fp:
+        string = json.dumps(final_list)
+        fp.write("{}".format(string))
+    #print(json.dumps(final_list))
     # for item in final_list:
     #     print(item)

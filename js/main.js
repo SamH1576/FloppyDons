@@ -2,7 +2,7 @@ var map, infoWindow;
       function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: -34.397, lng: 150.644},
-          zoom: 6
+          zoom: 15
         });
         infoWindow = new google.maps.InfoWindow;
 
@@ -41,6 +41,7 @@ var map, infoWindow;
     
     function showfreerooms(){
 
+
         
           var xhttp = new XMLHttpRequest();
           xhttp.onreadystatechange = function() {
@@ -49,27 +50,48 @@ var map, infoWindow;
               this.responseText;
                 
                 // Create a <script> tag and set the USGS URL as the source.
-                var script = document.createElement('script');
-                script.setAttribute("id", "script");
+                //var script = document.createElement('script');
+                //script.setAttribute("id", "script");
                 // This example uses a local copy of the GeoJSON stored at
                 // http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojsonp
-                script.src = 'https://developers.google.com/maps/documentation/javascript/examples/json/earthquake_GeoJSONP.js';
-                document.getElementsByTagName('head')[0].appendChild(script);
+//                script.src = 'result.js';
+//                document.getElementsByTagName('head')[0].appendChild(script);
+//                alert();
+                $.getJSON("result.json", function(a) {
+//                    console.log(a.rooms);
+//                    console.log(a.rooms[0][0][1].lat);
+                    for (var i = 0; i < 5; i++){
+                      var lat = a.rooms[i][0][1].lat;
+                      var lng = a.rooms[i][0][1].lng; 
+                      var latLng = new google.maps.LatLng(lat,lng);
+                      var marker = new google.maps.Marker({
+                          position: latLng,
+                          map: map
+                  });
+                    }
+                }
+                
 
                 // Loop through the results array and place a marker for each
-                // set of coordinates.
-                window.eqfeed_callback = function(results) {
-                  for (var i = 0; i < results.features.length; i++) {
-                  var coords = results.features[i].geometry.coordinates;
-                  var latLng = new google.maps.LatLng(coords[1],coords[0]);
-                  var marker = new google.maps.Marker({
-                      position: latLng,
-                      map: map
-                  });
-                  }
-                }            
-            }
-          };
+//                // set of coordinates.
+//                a.rooms = function(results) {
+//                  for (var i = 0; i < results.length; i++) {
+//                  //var coords = results.features[i].geometry.coordinates;
+//                      
+//                      var lat = results[i][0][1].lat;
+//                      var lng = results[i][0][1].lng;
+//                  var latLng = new google.maps.LatLng(lat,lng);
+//                  var marker = new google.maps.Marker({
+//                      position: latLng,
+//                      map: map
+//                  });
+//                  }
+//                }
+                )};
+//                this.rooms = function(results) {
+//                    
+//                }
+          }
           xhttp.open("GET", "PHP_Python_Test.php", true);
           xhttp.send();
     }
