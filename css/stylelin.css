@@ -1,0 +1,21 @@
+/*body {
+    padding: 0;
+    margin: 0;
+    background: url(../images/1.jpg) no-repeat 0px 0px;
+    background-attachment:fixed;
+	background-size:cover;
+}*/
+
+
+#map {
+        height: 400px;
+        width: 100%;
+}
+
+.main {
+	float: center;
+}
+
+#showfreerooms {
+	position: middle
+}
