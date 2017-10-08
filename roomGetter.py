@@ -66,6 +66,7 @@ j = json.loads(m.text)
 mylat = j['latitude']
 mylon = j['longitude']
 myloc = (float(mylat), float(mylon))
+#print(myloc)
 
 def get_distances(freerooms):
     #return list of distances in meters between myloc and free rooms
@@ -94,4 +95,4 @@ if __name__ == "__main__":
     frees = zip(frees,distances)
     final_list = nearest_rooms(frees)
     for item in final_list:
-        print item
+        print(item)
