@@ -1,4 +1,4 @@
-var map, infoWindow;
+var map, infoWindow, pos_ition;
       function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: -34.397, lng: 150.644},
@@ -13,7 +13,7 @@ var map, infoWindow;
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
-                
+            pos_ition = pos;    
             var marker = new google.maps.Marker({
                 position: pos,
                 map: map                
@@ -38,13 +38,12 @@ var map, infoWindow;
       }
     
     function showfreerooms(){
-
-
-        
+          console.log(pos_ition);
           var xhttp = new XMLHttpRequest();
           xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {               
-                $.getJSON("result.json", function(a) {
+            if (this.readyState == 4 && this.status == 200) {  
+                console.log(this.responseText);
+                var a = JSON.parse(this.responseText);
                     var rooms = [];
                     var letters = [];
                     letters = ["A", "B", "C", "D", "E", "F"];
@@ -65,10 +64,11 @@ var map, infoWindow;
                     }
                     shittylanguage(rooms);
                 }
-                )};
           }
-          xhttp.open("GET", "PHP_Python_Test.php", true);
+
+          xhttp.open("GET", "PHP_Python_Test.php?lat=" + pos_ition.lat + "&lng=" + pos_ition.lng, true);
           xhttp.send();
+          console.log('request sent');
     }
 
 function shittylanguage(rooms){

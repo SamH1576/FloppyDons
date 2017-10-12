@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from geopy.distance import vincenty
 from operator import itemgetter
 import io
+import argparse
 
 #methods for fetching all-rooms and booked-rooms using UCLAPI
 token = "uclapi-b122f02364cceb-6ec34be674c766-69f4d9c4c6e139-647b11df6fcef4"
@@ -60,16 +61,16 @@ def fetch_free_rooms(all_rooms, booked_rooms):
     return q
 
 
-#get my location
-send_url = 'http://freegeoip.net/json'
-m = requests.get(send_url)
-j = json.loads(m.text)
-mylat = j['latitude']
-mylon = j['longitude']
-myloc = (float(mylat), float(mylon))
-#print(myloc)
+# #get my location
+# send_url = 'http://freegeoip.net/json'
+# m = requests.get(send_url)
+# j = json.loads(m.text)
+# mylat = j['latitude']
+# mylon = j['longitude']
+# myloc = (float(mylat), float(mylon))
+# #print(myloc)
 
-def get_distances(freerooms):
+def get_distances(freerooms, myloc):
     #return list of distances in meters between myloc and free rooms
     distancearray = []
     for i in range (0, len(freerooms)-1):
@@ -88,26 +89,30 @@ def nearest_rooms(freess):
     return five_rooms
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("lat", type=float)
+    parser.add_argument("lng", type=float)
+    args = parser.parse_args()
+    myloc = (args.lat, args.lng)
+
     all_rooms = fetch_all_rooms()
     booked_rooms = fetch_booked_rooms()
     frees = fetch_free_rooms(all_rooms, booked_rooms)
     # frees = [(room1, {lat: 1, lon 2}), (room2, {lat: 3, lon 4}), ...]
-    distances = get_distances(frees)
+    distances = get_distances(frees, myloc)
     frees = zip(frees,distances)
 
-    final_list = {"status": "ok",
-                   "rooms": nearest_rooms(frees),
-                }
+    final_list = {"status": "ok", "rooms": nearest_rooms(frees)}
 
-<<<<<<< HEAD
-    with io.open('data.txt', 'w', encoding='utf-8') as f:
-        f.write(json.dumps(final_list, ensure_ascii=False))
+    string = json.dumps(final_list)
+    print(string)
 
-=======
-    with open('result.json', 'w') as fp:
-        string = json.dumps(final_list)
-        fp.write("{}".format(string))
->>>>>>> 4d1b9c9d33edab8a2a7b93e4c5310223942a0c6b
+    # with io.open('data.txt', 'w', encoding='utf-8') as f:
+    #     f.write(json.dumps(final_list, ensure_ascii=False))
+
+    # with open('result.json', 'w') as fp:
+    #     string = json.dumps(final_list)
+    #     fp.write("{}".format(string))
     #print(json.dumps(final_list))
     # for item in final_list:
     #     print(item)
